@@ -1,9 +1,10 @@
+#include <fcntl.h>    // open file
 #include <stdio.h> // printf
-#include <fstream>    // read, write to file
-#include <unistd.h>   // fork(), getpid()
 #include <sys/wait.h> // wait()
 #include <sys/file.h> // flock()
-#include <fcntl.h>    // open()
+#include <fstream>    // read and write to file
+#include <unistd.h>   // fork(), getpid()
+
 
 using namespace std;
 const char *FILE_F = "/tmp/F.txt";
