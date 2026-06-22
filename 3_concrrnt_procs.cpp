@@ -55,6 +55,7 @@ void concurProcess() {
     flock(fd, LOCK_UN);
     close(fd);
     }
+}
 
 int main() {
     ofstream startFile(FILE);
