@@ -6,13 +6,13 @@
 #include <fcntl.h>    // open()
 
 using namespace std;
-const char *FILE = "/tmp/F.txt";
+const char *FILE_NAME = "/tmp/F.txt";
 
 void concurProcess() {
     pid_t pid = getpid();
 
     for (int i = 0; i < 100; i++) {
-        int fd = open(FILE, O_RDWR);
+        int fd = open(FILE_NAME, O_RDWR);
 
     //error check
     if (fd == -1) {
@@ -24,7 +24,7 @@ void concurProcess() {
     flock(fd, LOCK_EX);
     int value; 
 
-    ifstream infile(FILE);
+    ifstream infile(FILE_NAME);
 
     if (!infile) {
         printf("Error reading file.");
@@ -36,11 +36,11 @@ void concurProcess() {
     infile >> value; 
     infile.close();
 
-    printf("PID %d read %d", pid, value);
+    printf("PID %d read %d\n", pid, value);
 
     value++;
 
-    ofstream outfile(FILE);
+    ofstream outfile(FILE_NAME);
 
     if (!outfile) {
         printf("Error writing file.");
@@ -58,7 +58,7 @@ void concurProcess() {
 }
 
 int main() {
-    ofstream startFile(FILE);
+    ofstream startFile(FILE_NAME);
 
     if (!startFile) {
         printf("Error making file");
@@ -75,15 +75,14 @@ int main() {
             concurProcess();
             return 0;
         }
-    }
 
-    else if (pid < 0) {
-        perror("Error forking process.");
-        exit(1);
+        else if (pid < 0) {
+            perror("Error forking process.");
+            exit(1);
+        }
     }
 
     for (int i = 0; i < 3; i++) {
         wait(NULL);
     }
-}
 }
