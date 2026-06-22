@@ -67,6 +67,22 @@ int main() {
     startFile << 0;
     startFile.close();
 
-    for 
+    for (int i = 0; i < 3; i++) {
+        pid_t pid = fork();
+
+        if (pid == 0) {
+            concurProcess();
+            return 0;
+        }
+    }
+
+    else if (pid < 0) {
+        perror("Error forking process.");
+        exit(1);
+    }
+
+    for (int i = 0; i < 3; i++) {
+        wait(NULL);
+    }
 }
 }
